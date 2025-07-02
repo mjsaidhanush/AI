@@ -1,0 +1,61 @@
+# ✅ Patch to fix experta compatibility with Python 3.10+ and 3.11
+import collections
+import collections.abc
+collections.Mapping = collections.abc.Mapping
+
+# ✅ Install experta
+!pip install experta
+
+# ✅ Importing experta components
+from experta import *
+
+# ✅ Define patient facts
+class Patient(Fact):
+    pass
+
+# ✅ Medical Diagnosis Expert System
+class MedicalDiagnosisSystem(KnowledgeEngine):
+    @Rule(Patient(fever='yes', cough='yes', breathlessness='yes'))
+    def rule_pneumonia(self):
+        print("✅ Diagnosis Suggestion: Pneumonia")
+
+    @Rule(Patient(fever='yes', headache='yes', rash='yes', joint_pain='yes'))
+    def rule_dengue(self):
+        print("✅ Diagnosis Suggestion: Dengue Fever")
+
+    @Rule(Patient(fever='yes', sore_throat='yes', body_pain='yes', fatigue='yes'))
+    def rule_flu(self):
+        print("✅ Diagnosis Suggestion: Influenza (Flu)")
+
+    @Rule(Patient(fever='yes', weight_loss='yes', night_sweats='yes', cough='yes'))
+    def rule_tb(self):
+        print("✅ Diagnosis Suggestion: Tuberculosis")
+
+    @Rule(Patient(cough='yes', sneezing='yes', sore_throat='yes'))
+    def rule_cold(self):
+        print("✅ Diagnosis Suggestion: Common Cold")
+
+# ✅ Create engine instance
+engine = MedicalDiagnosisSystem()
+engine.reset()
+
+# ✅ Declare facts (symptoms)
+engine.declare(Patient(
+    fever='yes',
+    cough='yes',
+    breathlessness='yes',
+    headache='no',
+    rash='no',
+    joint_pain='no',
+    sore_throat='no',
+    body_pain='no',
+    fatigue='no',
+    weight_loss='no',
+    night_sweats='no',
+    sneezing='no'
+))
+
+print("=== Medical Diagnosis Expert System ===")
+print("Symptoms: fever, cough, breathlessness")
+print("\nRunning diagnosis...\n")
+engine.run()
