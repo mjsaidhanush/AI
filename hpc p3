@@ -1,0 +1,118 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/mjsaidhanush/AI/blob/main/hpc%20p3\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%bash\n",
+        "cat << 'EOF' > quicksort.cpp\n",
+        "#include <iostream>\n",
+        "using namespace std;\n",
+        "\n",
+        "int partition(int arr[], int low, int high) {\n",
+        "    int pivot = arr[high];\n",
+        "    int i = low - 1;\n",
+        "\n",
+        "    for (int j = low; j < high; j++) {\n",
+        "        if (arr[j] < pivot) {\n",
+        "            i++;\n",
+        "            swap(arr[i], arr[j]);\n",
+        "        }\n",
+        "    }\n",
+        "\n",
+        "    swap(arr[i + 1], arr[high]);\n",
+        "    return i + 1;\n",
+        "}\n",
+        "\n",
+        "void quickSort(int arr[], int low, int high) {\n",
+        "    if (low < high) {\n",
+        "        int pi = partition(arr, low, high);\n",
+        "        quickSort(arr, low, pi - 1);\n",
+        "        quickSort(arr, pi + 1, high);\n",
+        "    }\n",
+        "}\n",
+        "\n",
+        "void printArray(int arr[], int size) {\n",
+        "    for (int i = 0; i < size; i++)\n",
+        "        cout << arr[i] << \" \";\n",
+        "    cout << endl;\n",
+        "}\n",
+        "\n",
+        "int main() {\n",
+        "    int arr[] = {10, 7, 8, 9, 1, 5};\n",
+        "    int n = sizeof(arr) / sizeof(arr[0]);\n",
+        "\n",
+        "    cout << \"Original array:\\n\";\n",
+        "    printArray(arr, n);\n",
+        "\n",
+        "    quickSort(arr, 0, n - 1);\n",
+        "\n",
+        "    cout << \"Sorted array:\\n\";\n",
+        "    printArray(arr, n);\n",
+        "\n",
+        "    return 0;\n",
+        "}\n",
+        "EOF\n"
+      ],
+      "metadata": {
+        "id": "udbMFB8MsSsq"
+      },
+      "execution_count": 1,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%bash\n",
+        "g++ quicksort.cpp -o quicksort\n",
+        "./quicksort\n",
+        "\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "ZgJbzn2LsWbR",
+        "outputId": "6ce99f34-726d-4308-fa53-44ac72717e37",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Original array:\n",
+            "10 7 8 9 1 5 \n",
+            "Sorted array:\n",
+            "1 5 7 8 9 10 \n"
+          ]
+        }
+      ]
+    }
+  ]
+}
